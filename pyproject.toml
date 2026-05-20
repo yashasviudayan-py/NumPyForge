@@ -39,7 +39,7 @@ testpaths = ["tests"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["api", "pipeline", "src", "tests"]
+src = ["api", "examples", "pipeline", "src", "tests"]
 
 [tool.ruff.lint]
 select = ["B", "E", "F", "I", "UP"]
