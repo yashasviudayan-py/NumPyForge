@@ -8,8 +8,8 @@ import numpy as np
 from fastapi import FastAPI
 from pydantic import BaseModel as PydanticBaseModel
 
-from src.base import FloatArray
 from src.linear_model import LogisticRegression
+from src.types import FloatArray
 
 
 class PredictionRequest(PydanticBaseModel):
