@@ -42,5 +42,5 @@ def predict(request: PredictionRequest) -> PredictionResponse:
     predictions = _model.predict(features)
     return PredictionResponse(
         predictions=[int(prediction) for prediction in predictions],
-        probabilities=[float(probability) for probability in probabilities],
+        probabilities=[float(probability) for probability in probabilities[:, 1]],
     )

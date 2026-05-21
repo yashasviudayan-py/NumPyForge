@@ -25,7 +25,7 @@ def main() -> None:
             }
         )
         model.fit(X, y)
-        accuracy = float(np.mean(model.predict(X) == y))
+        accuracy = model.score(X, y)
         mlflow.log_metric("train_accuracy", accuracy)
 
     print(f"Training accuracy: {accuracy:.3f}")
