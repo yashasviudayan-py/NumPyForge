@@ -56,18 +56,18 @@ Implement classical supervised learning models using pure NumPy and optimization
 
 ### Tasks
 
-- [ ] Expand binary logistic regression with stable loss computation and probability calibration.
-- [ ] Add multiclass logistic regression using softmax and cross-entropy.
-- [ ] Implement linear regression with closed-form normal equation support.
-- [ ] Implement gradient-descent linear regression for large datasets.
-- [ ] Add L2 regularization for linear and logistic regression.
-- [ ] Add L1 regularization with subgradient or proximal update support.
-- [ ] Implement configurable batch, mini-batch, and stochastic gradient descent.
-- [ ] Add early stopping based on validation loss and gradient norm.
-- [ ] Track loss history, parameter norms, convergence status, and number of iterations.
-- [ ] Add optional class weights and sample weights for imbalanced datasets.
-- [ ] Build examples that compare learned coefficients with known synthetic data.
-- [ ] Document where the implementation matches or intentionally differs from scikit-learn.
+- [x] Expand binary logistic regression with stable loss computation and probability calibration.
+- [x] Add multiclass logistic regression using softmax and cross-entropy.
+- [x] Implement linear regression with closed-form normal equation support.
+- [x] Implement gradient-descent linear regression for large datasets.
+- [x] Add L2 regularization for linear and logistic regression.
+- [x] Add L1 regularization with subgradient or proximal update support.
+- [x] Implement configurable batch, mini-batch, and stochastic gradient descent.
+- [x] Add early stopping based on validation loss and gradient norm.
+- [x] Track loss history, parameter norms, convergence status, and number of iterations.
+- [x] Add optional class weights and sample weights for imbalanced datasets.
+- [x] Build examples that compare learned coefficients with known synthetic data.
+- [x] Document where the implementation matches or intentionally differs from scikit-learn.
 
 ### Deliverables
 

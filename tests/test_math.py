@@ -5,9 +5,12 @@ from __future__ import annotations
 import numpy as np
 
 from src.math import (
+    binary_cross_entropy,
+    categorical_cross_entropy,
     clip_probabilities,
     l2_norm,
     log_sum_exp,
+    mean_squared_error,
     one_hot,
     softmax,
     squared_l2_norm,
@@ -71,3 +74,17 @@ def test_clip_probabilities_and_norm_helpers() -> None:
     np.testing.assert_allclose(clipped, np.array([1e-6, 0.5, 1.0 - 1e-6]))
     assert l2_norm(values) == 5.0
     assert squared_l2_norm(values) == 25.0
+
+
+def test_loss_helpers_support_sample_weights() -> None:
+    y_binary = np.array([0.0, 1.0], dtype=np.float64)
+    p_binary = np.array([0.25, 0.75], dtype=np.float64)
+    y_multiclass = np.array([[1.0, 0.0], [0.0, 1.0]], dtype=np.float64)
+    p_multiclass = np.array([[0.8, 0.2], [0.3, 0.7]], dtype=np.float64)
+    weights = np.array([1.0, 3.0], dtype=np.float64)
+
+    assert binary_cross_entropy(y_binary, p_binary, weights) == binary_cross_entropy(
+        y_binary, p_binary
+    )
+    assert categorical_cross_entropy(y_multiclass, p_multiclass, weights) > 0.0
+    assert mean_squared_error(y_binary, p_binary, weights) > 0.0

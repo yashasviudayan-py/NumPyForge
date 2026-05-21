@@ -8,10 +8,15 @@ import pytest
 from src.validation import (
     check_binary_targets,
     check_class_labels,
+    check_class_weight,
     check_feature_matrix,
+    check_linear_solver_penalty,
     check_matching_n_features,
+    check_multiclass_targets,
+    check_penalty,
     check_sample_weight,
     check_target_vector,
+    check_validation_fraction,
 )
 
 
@@ -72,3 +77,34 @@ def test_check_matching_n_features_rejects_prediction_width_mismatch() -> None:
 
     with pytest.raises(ValueError, match="fitted with 3 features"):
         check_matching_n_features(features, n_features_in=3)
+
+
+def test_multiclass_targets_require_integer_labels_and_multiple_classes() -> None:
+    labels = check_multiclass_targets(np.array([2, 1, 2], dtype=np.int_))
+
+    np.testing.assert_array_equal(labels, np.array([2, 1, 2], dtype=np.int_))
+
+    with pytest.raises(ValueError, match="at least two classes"):
+        check_multiclass_targets(np.array([1, 1], dtype=np.int_))
+
+
+def test_class_weight_supports_balanced_and_explicit_mappings() -> None:
+    classes = np.array([0, 1], dtype=np.int_)
+    y = np.array([0, 0, 0, 1], dtype=np.int_)
+
+    balanced = check_class_weight("balanced", classes=classes, y=y)
+    explicit = check_class_weight({0: 1.5}, classes=classes, y=y)
+
+    assert balanced[1] > balanced[0]
+    assert explicit == {0: 1.5, 1: 1.0}
+
+
+def test_validation_helpers_reject_bad_training_options() -> None:
+    with pytest.raises(ValueError, match="validation_fraction"):
+        check_validation_fraction(1.0)
+
+    with pytest.raises(ValueError, match="penalty"):
+        check_penalty("elasticnet")  # type: ignore[arg-type]
+
+    with pytest.raises(ValueError, match="only supported"):
+        check_linear_solver_penalty("normal_equation", "l1")

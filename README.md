@@ -62,3 +62,41 @@ Run the estimator lifecycle example with:
 ```bash
 python examples/estimator_lifecycle.py
 ```
+
+## Classical ML Models
+
+Phase 2 adds NumPy-only implementations of linear regression, binary logistic regression, and
+multiclass softmax regression.
+
+`LinearRegression` supports two solvers:
+
+- `solver="normal_equation"` computes the closed-form least-squares solution with
+  `np.linalg.pinv`. This handles ordinary least squares and ridge regression (`penalty="l2"`).
+- `solver="gradient_descent"` minimizes mean squared error with the reusable optimizer in
+  `src/optimizers.py`. This path supports no penalty, L1, and L2 regularization.
+
+`LogisticRegression` supports binary and multiclass classification in one estimator:
+
+- Binary classification uses the sigmoid likelihood and weighted binary cross-entropy.
+- Multiclass classification uses softmax probabilities and categorical cross-entropy when
+  `multi_class="multinomial"` or `multi_class="auto"` sees more than two classes.
+- `predict_proba(X)` always returns shape `(n_samples, n_classes)`, including binary
+  classification. Positive-class probabilities are in column `1` for binary labels.
+
+Both linear and logistic models support:
+
+- L1 and L2 penalties without regularizing the intercept/bias term.
+- Batch, mini-batch, and stochastic gradient descent.
+- Optional sample weights.
+- Early stopping with deterministic validation splits.
+- Training histories: `loss_history_`, `validation_loss_history_`, `gradient_norm_history_`,
+  `parameter_norm_history_`, `n_iter_`, and `converged_`.
+
+Logistic regression also supports `class_weight`, including explicit mappings and `"balanced"` for
+imbalanced classification.
+
+Run the Phase 2 example suite with:
+
+```bash
+python examples/classical_ml.py
+```
