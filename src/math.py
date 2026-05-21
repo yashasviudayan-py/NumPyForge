@@ -87,3 +87,47 @@ def l2_norm(values: FloatArray) -> float:
 def squared_l2_norm(values: FloatArray) -> float:
     """Return the squared Euclidean norm of a vector or matrix."""
     return float(np.sum(values * values))
+
+
+def weighted_mean(values: FloatArray, sample_weight: FloatArray | None = None) -> float:
+    """Return the weighted mean of a one-dimensional float array."""
+    if sample_weight is None:
+        return float(np.mean(values))
+
+    weight_sum = float(np.sum(sample_weight))
+    if weight_sum <= 0.0:
+        raise ValueError("sample weights must sum to a positive value.")
+
+    return float(np.sum(values * sample_weight) / weight_sum)
+
+
+def binary_cross_entropy(
+    y_true: FloatArray,
+    y_pred: FloatArray,
+    sample_weight: FloatArray | None = None,
+) -> float:
+    """Compute weighted binary cross-entropy."""
+    clipped = clip_probabilities(y_pred)
+    losses = -(y_true * np.log(clipped) + (1.0 - y_true) * np.log(1.0 - clipped))
+    return weighted_mean(cast(FloatArray, losses), sample_weight)
+
+
+def categorical_cross_entropy(
+    y_true_one_hot: FloatArray,
+    y_pred: FloatArray,
+    sample_weight: FloatArray | None = None,
+) -> float:
+    """Compute weighted categorical cross-entropy."""
+    clipped = clip_probabilities(y_pred)
+    losses = cast(FloatArray, -np.sum(y_true_one_hot * np.log(clipped), axis=1))
+    return weighted_mean(losses, sample_weight)
+
+
+def mean_squared_error(
+    y_true: FloatArray,
+    y_pred: FloatArray,
+    sample_weight: FloatArray | None = None,
+) -> float:
+    """Compute weighted mean squared error."""
+    losses = cast(FloatArray, (y_true - y_pred) ** 2)
+    return weighted_mean(losses, sample_weight)

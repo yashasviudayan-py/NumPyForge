@@ -6,11 +6,14 @@ consistent error messages, shape handling, and finite-value guarantees.
 
 from __future__ import annotations
 
-from typing import cast
+from typing import Literal, cast
 
 import numpy as np
 
 from src.types import ArrayLike, FloatArray, IntArray, RawArrayLike
+
+Penalty = Literal["l1", "l2", None]
+Solver = Literal["normal_equation", "gradient_descent"]
 
 
 def check_feature_matrix(X: RawArrayLike, *, ensure_finite: bool = True) -> FloatArray:
@@ -145,6 +148,98 @@ def check_sample_weight(sample_weight: RawArrayLike | None, *, n_samples: int) -
         raise ValueError("sample_weight cannot contain negative values.")
 
     return weights
+
+
+def check_multiclass_targets(y: RawArrayLike, *, n_samples: int | None = None) -> IntArray:
+    """Validate multiclass integer targets and require at least two classes."""
+    labels = check_class_labels(y, n_samples=n_samples)
+
+    if np.unique(labels).shape[0] < 2:
+        raise ValueError("Classification targets must contain at least two classes.")
+
+    return labels
+
+
+def check_class_weight(
+    class_weight: dict[int, float] | Literal["balanced"] | None,
+    *,
+    classes: IntArray,
+    y: IntArray,
+) -> dict[int, float]:
+    """Return class weights for known classes.
+
+    Args:
+        class_weight: Explicit class-to-weight mapping, `"balanced"`, or `None`.
+        classes: Sorted class labels with shape `(n_classes,)`.
+        y: Encoded or raw class labels with shape `(n_samples,)`.
+
+    Returns:
+        A dictionary containing one positive finite weight for each class.
+    """
+    if class_weight is None:
+        return {int(label): 1.0 for label in classes}
+
+    if class_weight == "balanced":
+        n_samples = y.shape[0]
+        n_classes = classes.shape[0]
+        weights: dict[int, float] = {}
+        for label in classes:
+            count = int(np.sum(y == label))
+            weights[int(label)] = n_samples / (n_classes * count)
+        return weights
+
+    weights = {int(label): 1.0 for label in classes}
+    unknown_labels = set(class_weight) - set(weights)
+    if unknown_labels:
+        raise ValueError(f"class_weight contains unknown classes: {sorted(unknown_labels)}.")
+
+    for label, weight in class_weight.items():
+        if not np.isfinite(weight) or weight <= 0.0:
+            raise ValueError("class_weight values must be positive finite numbers.")
+        weights[int(label)] = float(weight)
+
+    return weights
+
+
+def check_batch_size(batch_size: int | None, *, n_samples: int) -> int | None:
+    """Validate an optional mini-batch size."""
+    if batch_size is None:
+        return None
+
+    if batch_size <= 0:
+        raise ValueError("batch_size must be positive.")
+
+    if batch_size > n_samples:
+        raise ValueError("batch_size cannot exceed the number of samples.")
+
+    return batch_size
+
+
+def check_validation_fraction(validation_fraction: float) -> float:
+    """Validate a holdout fraction for internal early stopping."""
+    if not 0.0 <= validation_fraction < 1.0:
+        raise ValueError("validation_fraction must be in [0.0, 1.0).")
+
+    return validation_fraction
+
+
+def check_penalty(penalty: Penalty) -> Penalty:
+    """Validate regularization penalty."""
+    if penalty not in {"l1", "l2", None}:
+        raise ValueError("penalty must be one of 'l1', 'l2', or None.")
+
+    return penalty
+
+
+def check_linear_solver_penalty(solver: Solver, penalty: Penalty) -> None:
+    """Validate linear-regression solver and penalty compatibility."""
+    if solver not in {"normal_equation", "gradient_descent"}:
+        raise ValueError("solver must be 'normal_equation' or 'gradient_descent'.")
+
+    check_penalty(penalty)
+
+    if solver == "normal_equation" and penalty == "l1":
+        raise ValueError("penalty='l1' is only supported with solver='gradient_descent'.")
 
 
 def check_matching_n_features(X: FloatArray, *, n_features_in: int | None) -> None:
