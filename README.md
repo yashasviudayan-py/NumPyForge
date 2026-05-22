@@ -100,3 +100,39 @@ Run the Phase 2 example suite with:
 ```bash
 python examples/classical_ml.py
 ```
+
+## Neural Networks
+
+Phase 3 adds a pure NumPy deep-learning layer with scikit-like `MLPClassifier` and `MLPRegressor`
+estimators.
+
+The public MLP API supports:
+
+- `hidden_layer_sizes` for dense hidden-layer widths.
+- Hidden activations: `relu`, `leaky_relu`, `sigmoid`, and `tanh`.
+- Optimizers: `sgd`, `momentum`, `rmsprop`, and `adam`.
+- Learning-rate schedules: `constant`, `step`, and `cosine`.
+- Dropout on hidden activations with inverted-dropout scaling.
+- L2 weight decay through `alpha`, excluding bias parameters.
+- Training histories: `loss_history_`, `validation_loss_history_`, `learning_rate_history_`,
+  `n_iter_`, and `converged_`.
+
+Neural-network internals live under `src/neural_network/`:
+
+- `layers.py` contains `Dense`, dropout, and activation layers.
+- `losses.py` contains MSE, binary cross-entropy, and categorical cross-entropy losses.
+- `initializers.py` contains zeros, normal, Xavier/Glorot, and He initialization.
+- `network.py` runs ordered forward and backward passes.
+- `gradient_check.py` provides central finite-difference gradient checking.
+
+Shape conventions:
+
+- Dense layers receive and return matrices with shape `(n_samples, n_units)`.
+- `MLPClassifier.predict_proba(X)` returns probabilities with shape `(n_samples, n_classes)`.
+- `MLPRegressor.predict(X)` returns a one-dimensional vector with shape `(n_samples,)`.
+
+Run the Phase 3 example suite with:
+
+```bash
+python examples/neural_networks.py
+```

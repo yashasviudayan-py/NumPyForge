@@ -91,19 +91,19 @@ Build a small neural-network module that teaches the mechanics of forward passes
 
 ### Tasks
 
-- [ ] Define a `Layer` protocol with `forward`, `backward`, `params`, and `grads`.
-- [ ] Implement dense fully connected layers using pure NumPy.
-- [ ] Implement activation functions: ReLU, Leaky ReLU, sigmoid, tanh, and softmax.
-- [ ] Implement loss functions for binary cross-entropy, categorical cross-entropy, and mean squared error.
-- [ ] Add parameter initializers: zeros, random normal, Xavier/Glorot, and He initialization.
-- [ ] Implement a sequential `MLPClassifier` and `MLPRegressor`.
-- [ ] Implement backpropagation with cached intermediate activations.
-- [ ] Add optimizers: SGD, SGD with momentum, RMSProp, and Adam.
-- [ ] Support mini-batch training with deterministic shuffling.
-- [ ] Add dropout as an optional regularization layer.
-- [ ] Add learning-rate schedules for constant, step decay, and cosine decay.
-- [ ] Add training-history output for loss, metrics, learning rate, and epoch timing.
-- [ ] Create toy demos for XOR, moons, blobs, and simple regression curves.
+- [x] Define a `Layer` protocol with `forward`, `backward`, `params`, and `grads`.
+- [x] Implement dense fully connected layers using pure NumPy.
+- [x] Implement activation functions: ReLU, Leaky ReLU, sigmoid, tanh, and softmax.
+- [x] Implement loss functions for binary cross-entropy, categorical cross-entropy, and mean squared error.
+- [x] Add parameter initializers: zeros, random normal, Xavier/Glorot, and He initialization.
+- [x] Implement a sequential `MLPClassifier` and `MLPRegressor`.
+- [x] Implement backpropagation with cached intermediate activations.
+- [x] Add optimizers: SGD, SGD with momentum, RMSProp, and Adam.
+- [x] Support mini-batch training with deterministic shuffling.
+- [x] Add dropout as an optional regularization layer.
+- [x] Add learning-rate schedules for constant, step decay, and cosine decay.
+- [x] Add training-history output for loss, metrics, learning rate, and epoch timing.
+- [x] Create toy demos for XOR, moons, blobs, and simple regression curves.
 
 ### Deliverables
 
