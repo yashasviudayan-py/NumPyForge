@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass
-from typing import Literal, cast
+from typing import Literal, Protocol, cast
 
 import numpy as np
 
@@ -13,11 +13,182 @@ from src.types import ArrayLike, FloatArray, RandomState
 from src.validation import check_batch_size, check_validation_fraction
 
 BatchStrategy = Literal["batch", "mini_batch", "stochastic"]
+ScheduleKind = Literal["constant", "step", "cosine"]
 OptimizerParameters = dict[str, FloatArray]
 ObjectiveCallback = Callable[[OptimizerParameters, FloatArray, ArrayLike, FloatArray | None], float]
 GradientCallback = Callable[
     [OptimizerParameters, FloatArray, ArrayLike, FloatArray | None], OptimizerParameters
 ]
+
+
+class Optimizer(Protocol):
+    """Protocol for stateful parameter-update optimizers."""
+
+    def step(
+        self,
+        parameters: OptimizerParameters,
+        gradients: OptimizerParameters,
+        *,
+        learning_rate: float,
+    ) -> None:
+        """Update parameters in place."""
+
+
+class SGDOptimizer:
+    """Plain stochastic gradient descent."""
+
+    def step(
+        self,
+        parameters: OptimizerParameters,
+        gradients: OptimizerParameters,
+        *,
+        learning_rate: float,
+    ) -> None:
+        for name, gradient in gradients.items():
+            parameters[name] -= learning_rate * gradient
+
+
+@dataclass
+class MomentumOptimizer:
+    """SGD with momentum."""
+
+    momentum: float = 0.9
+    velocity_: OptimizerParameters | None = None
+
+    def __post_init__(self) -> None:
+        if not 0.0 <= self.momentum < 1.0:
+            raise ValueError("momentum must be in [0.0, 1.0).")
+
+    def step(
+        self,
+        parameters: OptimizerParameters,
+        gradients: OptimizerParameters,
+        *,
+        learning_rate: float,
+    ) -> None:
+        if self.velocity_ is None:
+            self.velocity_ = _zeros_like(parameters)
+
+        for name, gradient in gradients.items():
+            self.velocity_[name] = self.momentum * self.velocity_[name] - learning_rate * gradient
+            parameters[name] += self.velocity_[name]
+
+
+@dataclass
+class RMSPropOptimizer:
+    """RMSProp optimizer with exponential moving average of squared gradients."""
+
+    decay_rate: float = 0.9
+    eps: float = 1e-8
+    squared_average_: OptimizerParameters | None = None
+
+    def __post_init__(self) -> None:
+        if not 0.0 <= self.decay_rate < 1.0:
+            raise ValueError("decay_rate must be in [0.0, 1.0).")
+        if self.eps <= 0.0:
+            raise ValueError("eps must be positive.")
+
+    def step(
+        self,
+        parameters: OptimizerParameters,
+        gradients: OptimizerParameters,
+        *,
+        learning_rate: float,
+    ) -> None:
+        if self.squared_average_ is None:
+            self.squared_average_ = _zeros_like(parameters)
+
+        for name, gradient in gradients.items():
+            self.squared_average_[name] = (
+                self.decay_rate * self.squared_average_[name]
+                + (1.0 - self.decay_rate) * gradient * gradient
+            )
+            parameters[name] -= (
+                learning_rate * gradient / (np.sqrt(self.squared_average_[name]) + self.eps)
+            )
+
+
+@dataclass
+class AdamOptimizer:
+    """Adam optimizer with bias-corrected first and second moments."""
+
+    beta1: float = 0.9
+    beta2: float = 0.999
+    eps: float = 1e-8
+    first_moment_: OptimizerParameters | None = None
+    second_moment_: OptimizerParameters | None = None
+    timestep_: int = 0
+
+    def __post_init__(self) -> None:
+        if not 0.0 <= self.beta1 < 1.0:
+            raise ValueError("beta1 must be in [0.0, 1.0).")
+        if not 0.0 <= self.beta2 < 1.0:
+            raise ValueError("beta2 must be in [0.0, 1.0).")
+        if self.eps <= 0.0:
+            raise ValueError("eps must be positive.")
+
+    def step(
+        self,
+        parameters: OptimizerParameters,
+        gradients: OptimizerParameters,
+        *,
+        learning_rate: float,
+    ) -> None:
+        if self.first_moment_ is None:
+            self.first_moment_ = _zeros_like(parameters)
+        if self.second_moment_ is None:
+            self.second_moment_ = _zeros_like(parameters)
+
+        self.timestep_ += 1
+        for name, gradient in gradients.items():
+            self.first_moment_[name] = (
+                self.beta1 * self.first_moment_[name] + (1.0 - self.beta1) * gradient
+            )
+            self.second_moment_[name] = (
+                self.beta2 * self.second_moment_[name] + (1.0 - self.beta2) * gradient * gradient
+            )
+            first_unbiased = self.first_moment_[name] / (1.0 - self.beta1**self.timestep_)
+            second_unbiased = self.second_moment_[name] / (1.0 - self.beta2**self.timestep_)
+            parameters[name] -= (
+                learning_rate * first_unbiased / (np.sqrt(second_unbiased) + self.eps)
+            )
+
+
+@dataclass(frozen=True)
+class LearningRateSchedule:
+    """Learning-rate schedule for iterative optimization."""
+
+    initial_learning_rate: float
+    kind: ScheduleKind = "constant"
+    step_size: int = 10
+    decay_rate: float = 0.5
+    max_iter: int = 1
+
+    def __post_init__(self) -> None:
+        if self.initial_learning_rate <= 0.0:
+            raise ValueError("initial_learning_rate must be positive.")
+        if self.kind not in {"constant", "step", "cosine"}:
+            raise ValueError("kind must be 'constant', 'step', or 'cosine'.")
+        if self.step_size <= 0:
+            raise ValueError("step_size must be positive.")
+        if not 0.0 < self.decay_rate <= 1.0:
+            raise ValueError("decay_rate must be in (0.0, 1.0].")
+        if self.max_iter <= 0:
+            raise ValueError("max_iter must be positive.")
+
+    def value(self, iteration: int) -> float:
+        """Return the learning rate for a zero-based iteration index."""
+        if iteration < 0:
+            raise ValueError("iteration cannot be negative.")
+
+        if self.kind == "constant":
+            return self.initial_learning_rate
+
+        if self.kind == "step":
+            return self.initial_learning_rate * self.decay_rate ** (iteration // self.step_size)
+
+        progress = min(iteration, self.max_iter) / self.max_iter
+        return self.initial_learning_rate * 0.5 * (1.0 + float(np.cos(np.pi * progress)))
 
 
 @dataclass(frozen=True)
@@ -184,6 +355,10 @@ def run_gradient_descent(
 
 def _copy_parameters(parameters: OptimizerParameters) -> OptimizerParameters:
     return {name: cast(FloatArray, value.copy()) for name, value in parameters.items()}
+
+
+def _zeros_like(parameters: OptimizerParameters) -> OptimizerParameters:
+    return {name: np.zeros_like(value, dtype=np.float64) for name, value in parameters.items()}
 
 
 def _apply_gradient_step(
