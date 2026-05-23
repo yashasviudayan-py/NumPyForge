@@ -127,17 +127,17 @@ Create a framework-native model-selection and evaluation layer so experiments ca
 
 ### Tasks
 
-- [ ] Implement deterministic train/test split with optional stratification.
-- [ ] Implement K-fold and stratified K-fold cross-validation from scratch.
-- [ ] Add classification metrics: accuracy, precision, recall, F1-score, confusion matrix, log loss, ROC-AUC, and PR-AUC.
-- [ ] Add regression metrics: MAE, MSE, RMSE, R2, adjusted R2, and explained variance.
-- [ ] Implement ROC and precision-recall curve generation.
-- [ ] Add threshold-tuning utilities for binary classifiers.
-- [ ] Add model-selection helpers for grid search and randomized search.
-- [ ] Add baseline estimators such as majority-class classifier and mean regressor.
-- [ ] Create evaluation reports that return structured dictionaries and optional plots.
-- [ ] Add metric tests using small examples with hand-verified expected values.
-- [ ] Add integration tests comparing selected metrics against scikit-learn on tiny datasets where appropriate.
+- [x] Implement deterministic train/test split with optional stratification.
+- [x] Implement K-fold and stratified K-fold cross-validation from scratch.
+- [x] Add classification metrics: accuracy, precision, recall, F1-score, confusion matrix, log loss, ROC-AUC, and PR-AUC.
+- [x] Add regression metrics: MAE, MSE, RMSE, R2, adjusted R2, and explained variance.
+- [x] Implement ROC and precision-recall curve generation for binary classifiers.
+- [x] Add model-selection helpers for grid search and randomized search.
+- [x] Add baseline estimators such as majority-class classifier and mean regressor.
+- [x] Create evaluation reports that return JSON-ready structured dictionaries.
+- [x] Add a local evaluation pipeline entrypoint using synthetic classification and regression examples.
+- [x] Add metric tests using small examples with hand-verified expected values.
+- [x] Add model-selection tests for splitting, cross-validation, cloning, grid search, and randomized search.
 
 ### Deliverables
 

@@ -136,3 +136,34 @@ Run the Phase 3 example suite with:
 ```bash
 python examples/neural_networks.py
 ```
+
+## Validation And Evaluation
+
+Phase 4 adds framework-native evaluation utilities for deterministic experiments and model
+selection.
+
+Data splitting and model selection live in `src/model_selection.py`:
+
+- `train_test_split` supports deterministic shuffling and optional stratification.
+- `k_fold_split` and `stratified_k_fold_split` yield train/test index pairs for cross-validation.
+- `cross_val_score` clones dataclass estimators and accepts default estimator scoring, known
+  scoring strings, or custom scorer callables.
+- `grid_search_cv` and `randomized_search_cv` return `SearchResult` objects with the fitted best
+  estimator, best parameters, best score, and fold-level results.
+
+Metrics and reports live in `src/metrics.py`:
+
+- Classification metrics include accuracy, confusion matrix, precision, recall, F1, log loss,
+  ROC-AUC, PR-AUC, ROC curves, and precision-recall curves.
+- Regression metrics include MAE, MSE, RMSE, R2, adjusted R2, and explained variance.
+- `classification_report_dict` and `regression_report_dict` return JSON-ready summaries for local
+  pipelines and future MLOps integration.
+
+Simple deterministic baselines are available as `MajorityClassClassifier` and `MeanRegressor`.
+
+Run the Phase 4 example and local evaluation pipeline with:
+
+```bash
+python examples/evaluation.py
+python pipeline/evaluate.py
+```
