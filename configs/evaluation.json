@@ -1,0 +1,10 @@
+{
+  "artifact": {
+    "artifact_dir": "models/current"
+  },
+  "data": {
+    "processed_path": "data/processed/binary_classification.npz",
+    "test_size": 0.25,
+    "random_state": 42
+  }
+}

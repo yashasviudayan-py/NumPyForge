@@ -1,0 +1,9 @@
+{
+  "artifact": {
+    "artifact_dir": "models/current"
+  },
+  "service": {
+    "name": "NumPyForge Serving API",
+    "version": "0.1.0"
+  }
+}
