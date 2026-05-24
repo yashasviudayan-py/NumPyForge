@@ -160,19 +160,19 @@ Turn the learning framework into a practical training and serving system with re
 
 ### Tasks
 
-- [ ] Expand FastAPI serving with health, readiness, metadata, and prediction endpoints.
-- [ ] Add request and response schemas with strict validation and helpful error messages.
-- [ ] Implement model artifact loading from `models/` with versioned metadata.
-- [ ] Add a training pipeline that logs parameters, metrics, plots, and artifacts to MLflow.
-- [ ] Add MLflow experiment naming, run tags, and reproducibility metadata.
-- [ ] Add data-ingestion entrypoints for raw and processed datasets.
-- [ ] Create configuration files for training, evaluation, and serving.
-- [ ] Add Dockerfile improvements for reproducible runtime builds.
-- [ ] Add a Docker Compose setup for API plus optional MLflow tracking server.
-- [ ] Add structured logging for training and serving.
-- [ ] Add basic prediction monitoring hooks for latency, input shape, and output distribution.
-- [ ] Add Makefile or task-runner commands for common workflows.
-- [ ] Document local development, training, serving, and artifact-management flows.
+- [x] Expand FastAPI serving with health, readiness, metadata, and prediction endpoints.
+- [x] Add request and response schemas with strict validation and helpful error messages.
+- [x] Implement model artifact loading from `models/` with versioned metadata.
+- [x] Add a training pipeline that logs parameters, metrics, and artifacts to MLflow when available.
+- [x] Add MLflow experiment naming, run tags, and reproducibility metadata.
+- [x] Add data-ingestion entrypoints for raw and processed datasets.
+- [x] Create configuration files for training, evaluation, and serving.
+- [x] Add Dockerfile improvements for reproducible runtime builds.
+- [x] Add a Docker Compose setup for API plus optional MLflow tracking server.
+- [x] Add structured logging for serving readiness and prediction monitoring.
+- [x] Add basic prediction monitoring hooks for latency, input shape, and output distribution.
+- [x] Add Makefile or task-runner commands for common workflows.
+- [x] Document local development, training, serving, and artifact-management flows.
 
 ### Deliverables
 

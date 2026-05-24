@@ -167,3 +167,35 @@ Run the Phase 4 example and local evaluation pipeline with:
 python examples/evaluation.py
 python pipeline/evaluate.py
 ```
+
+## Production And MLOps
+
+Phase 5 turns the binary `LogisticRegression` demo into a local production loop:
+
+- `python -m pipeline.ingest` creates a deterministic processed dataset.
+- `python -m pipeline.train` trains the model, logs metrics to MLflow when available, and writes
+  a versioned artifact under `models/current/`.
+- `python -m pipeline.evaluate` loads the saved artifact and reports holdout metrics as JSON.
+- `uvicorn api.main:app --reload` serves the saved artifact through FastAPI.
+
+The serving API exposes:
+
+- `GET /health` for process liveness.
+- `GET /ready` for artifact readiness.
+- `GET /metadata` for loaded model metadata and metrics.
+- `POST /predict` for binary predictions and positive-class probabilities.
+
+The API does not train a fallback model on import. If `models/current/` is missing or invalid,
+readiness and prediction return HTTP 503 while health remains available. Runtime data, model
+artifacts, and MLflow runs are intentionally ignored by git.
+
+Common workflow commands are available through `make`:
+
+```bash
+make ingest
+make train
+make evaluate
+make serve
+make quality
+make test
+```
