@@ -1,4 +1,4 @@
-.PHONY: ingest train evaluate serve quality test docker-build compose-up
+.PHONY: ingest train evaluate serve quality test coverage docker-build compose-up
 
 ingest:
 	python -m pipeline.ingest
@@ -19,6 +19,9 @@ quality:
 
 test:
 	python -m pytest
+
+coverage:
+	python -m pytest --cov=src --cov=api --cov=pipeline --cov-report=term-missing
 
 docker-build:
 	docker build -t numpyforge:latest .

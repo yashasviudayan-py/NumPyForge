@@ -20,7 +20,9 @@ dev = [
     "black>=24.8.0",
     "httpx>=0.27.0",
     "mypy>=1.11.0",
+    "pre-commit>=4.0.0",
     "pytest>=8.3.0",
+    "pytest-cov>=6.0.0",
     "ruff>=0.6.0",
 ]
 
@@ -36,6 +38,14 @@ target-version = ["py311"]
 addopts = "-ra"
 pythonpath = ["."]
 testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["api", "pipeline", "src"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
 
 [tool.ruff]
 line-length = 100
