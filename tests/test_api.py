@@ -64,6 +64,15 @@ def test_bad_feature_shape_returns_validation_error(tmp_path: Path) -> None:
     assert "fitted with 2 features" in response.json()["detail"]
 
 
+def test_empty_prediction_request_is_rejected(tmp_path: Path) -> None:
+    artifact_dir = _create_artifact(tmp_path)
+    client = TestClient(create_app(_write_serving_config(tmp_path, artifact_dir)))
+
+    response = client.post("/predict", json={"features": []})
+
+    assert response.status_code == 422
+
+
 def _create_artifact(tmp_path: Path) -> Path:
     X = np.array([[0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [1.0, 1.0]], dtype=np.float64)
     y = np.array([0, 0, 0, 1], dtype=np.int_)

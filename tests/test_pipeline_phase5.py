@@ -10,6 +10,8 @@ import numpy as np
 
 from pipeline.evaluate import evaluate
 from pipeline.ingest import ingest
+from pipeline.ingest import main as ingest_main
+from pipeline.train import main as train_main
 from pipeline.train import train
 
 
@@ -50,6 +52,16 @@ def test_evaluate_emits_json_serializable_report(tmp_path: Path) -> None:
     json.dumps(result, allow_nan=False)
     assert result["classification"]["accuracy"] >= 0.9
     assert result["model_version"] == "test"
+
+
+def test_pipeline_command_entrypoints_are_deterministic(tmp_path: Path) -> None:
+    config_path = _write_config(tmp_path)
+
+    ingest_main(["--config", str(config_path)])
+    train_main(["--config", str(config_path)])
+
+    result = evaluate(_write_evaluation_config(tmp_path))
+    assert result["classification"]["accuracy"] >= 0.9
 
 
 def _write_config(tmp_path: Path) -> Path:

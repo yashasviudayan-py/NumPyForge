@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import numpy as np
@@ -35,6 +36,39 @@ def test_artifact_status_reports_missing_directory(tmp_path: Path) -> None:
 
     assert not status.ready
     assert "does not exist" in str(status.error)
+
+
+def test_artifact_status_reports_corrupt_metadata(tmp_path: Path) -> None:
+    artifact_dir = tmp_path / "corrupt"
+    artifact_dir.mkdir()
+    (artifact_dir / "metadata.json").write_text("{not-json", encoding="utf-8")
+    (artifact_dir / "metrics.json").write_text("{}", encoding="utf-8")
+    (artifact_dir / "model.npz").write_bytes(b"not-a-model")
+
+    status = artifact_status(artifact_dir)
+
+    assert not status.ready
+    assert status.error is not None
+
+
+def test_artifact_loader_rejects_wrong_schema_version(tmp_path: Path) -> None:
+    artifact_dir = tmp_path / "bad-schema"
+    artifact_dir.mkdir()
+    (artifact_dir / "metadata.json").write_text(
+        json.dumps(
+            {
+                "schema_version": 999,
+                "model_type": "binary_logistic_regression",
+                "hyperparameters": {},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (artifact_dir / "metrics.json").write_text("{}", encoding="utf-8")
+    (artifact_dir / "model.npz").write_bytes(b"not-a-model")
+
+    with pytest.raises(ValueError, match="Unsupported artifact schema version"):
+        load_logistic_artifact(artifact_dir)
 
 
 def test_loaded_artifact_validates_feature_count(tmp_path: Path) -> None:

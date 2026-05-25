@@ -23,6 +23,7 @@ from src.metrics import (
     recall_score,
     regression_report_dict,
     roc_auc_score,
+    roc_curve,
     root_mean_squared_error,
 )
 
@@ -55,6 +56,22 @@ def test_probability_metrics_match_known_examples() -> None:
     assert roc_auc_score(y_true, y_score) == pytest.approx(0.75)
     assert pr_auc_score(y_true, y_score) > 0.0
     assert log_loss(y_true, y_proba) > 0.0
+
+
+def test_probability_metrics_reject_invalid_inputs() -> None:
+    y_true = np.array([0, 1], dtype=np.int_)
+
+    with pytest.raises(ValueError, match="inconsistent sample counts"):
+        log_loss(y_true, np.array([[0.4, 0.6]], dtype=np.float64))
+
+    with pytest.raises(ValueError, match=r"\[0.0, 1.0\]"):
+        log_loss(y_true, np.array([[1.2, -0.2], [0.2, 0.8]], dtype=np.float64))
+
+    with pytest.raises(ValueError, match="finite"):
+        log_loss(y_true, np.array([[np.nan, 1.0], [0.2, 0.8]], dtype=np.float64))
+
+    with pytest.raises(ValueError, match="both classes"):
+        roc_curve(np.array([1, 1], dtype=np.int_), np.array([0.6, 0.8], dtype=np.float64))
 
 
 def test_regression_metrics_match_hand_computed_values() -> None:

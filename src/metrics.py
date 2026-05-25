@@ -135,9 +135,33 @@ def log_loss(
 
     if probabilities.ndim == 1:
         probabilities = np.column_stack((1.0 - probabilities, probabilities))
+    elif probabilities.ndim != 2:
+        raise ValueError("y_proba must be a 1D or 2D probability array.")
+
+    if probabilities.shape[0] != targets.shape[0]:
+        raise ValueError(
+            "y_true and y_proba have inconsistent sample counts: "
+            f"{targets.shape[0]} != {probabilities.shape[0]}."
+        )
+
+    if not np.all(np.isfinite(probabilities)):
+        raise ValueError("y_proba must contain only finite values.")
+
+    if np.any((probabilities < 0.0) | (probabilities > 1.0)):
+        raise ValueError("y_proba values must be probabilities in [0.0, 1.0].")
 
     class_labels = np.asarray(labels, dtype=np.int_) if labels is not None else np.unique(targets)
+    if probabilities.shape[1] < class_labels.shape[0]:
+        raise ValueError(
+            "y_proba must contain at least one column for each class label; "
+            f"got {probabilities.shape[1]} columns for {class_labels.shape[0]} labels."
+        )
+
     label_to_index = {int(label): index for index, label in enumerate(class_labels)}
+    unknown_labels = set(int(label) for label in targets) - set(label_to_index)
+    if unknown_labels:
+        raise ValueError(f"y_true contains labels not present in labels: {sorted(unknown_labels)}.")
+
     target_indices = np.array([label_to_index[int(label)] for label in targets], dtype=np.int_)
     clipped = clip_probabilities(cast(FloatArray, probabilities))
     return float(-np.mean(np.log(clipped[np.arange(targets.shape[0]), target_indices])))

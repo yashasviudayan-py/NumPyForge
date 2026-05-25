@@ -31,6 +31,12 @@ def test_check_feature_matrix_rejects_bad_shapes_and_nonfinite_values() -> None:
     with pytest.raises(ValueError, match="2D array"):
         check_feature_matrix([1, 2, 3])
 
+    with pytest.raises(ValueError, match="at least one sample"):
+        check_feature_matrix(np.empty((0, 2), dtype=np.float64))
+
+    with pytest.raises(ValueError, match="at least one feature"):
+        check_feature_matrix(np.empty((2, 0), dtype=np.float64))
+
     with pytest.raises(ValueError, match="finite"):
         check_feature_matrix([[1.0, np.nan]])
 
@@ -42,6 +48,12 @@ def test_check_target_vector_validates_length() -> None:
 
     with pytest.raises(ValueError, match="inconsistent sample counts"):
         check_target_vector(np.array([1], dtype=np.int_), n_samples=2)
+
+    with pytest.raises(ValueError, match="at least one target"):
+        check_target_vector(np.array([], dtype=np.float64))
+
+    with pytest.raises(ValueError, match="finite"):
+        check_target_vector(np.array([1.0, np.inf], dtype=np.float64))
 
 
 def test_check_binary_targets_accepts_only_zero_one_encoding() -> None:
@@ -70,6 +82,9 @@ def test_check_sample_weight_validates_shape_and_values() -> None:
 
     with pytest.raises(ValueError, match="cannot contain negative"):
         check_sample_weight([1.0, -1.0], n_samples=2)
+
+    with pytest.raises(ValueError, match="finite"):
+        check_sample_weight([1.0, np.inf], n_samples=2)
 
 
 def test_check_matching_n_features_rejects_prediction_width_mismatch() -> None:
