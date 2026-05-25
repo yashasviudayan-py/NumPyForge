@@ -199,3 +199,29 @@ make serve
 make quality
 make test
 ```
+
+## Testing And CI
+
+Phase 6 enforces local and GitHub quality checks:
+
+- GitHub Actions runs Black, Ruff, mypy, pytest coverage reporting, and pipeline smoke tests on
+  pushes and pull requests to `main`.
+- Coverage is reported with missing lines but does not currently enforce a minimum threshold.
+- Pre-commit hooks are available for local formatting and file-hygiene checks.
+
+Install the development extras and hooks with:
+
+```bash
+python -m pip install -e ".[dev]"
+pre-commit install
+```
+
+Run the same local checks with:
+
+```bash
+make quality
+make coverage
+make ingest
+make train
+make evaluate
+```

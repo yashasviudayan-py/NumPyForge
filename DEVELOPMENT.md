@@ -195,25 +195,25 @@ Make correctness enforceable with tests, numerical checks, linting, type checkin
 
 ### Tasks
 
-- [ ] Add pytest unit tests for every estimator, metric, optimizer, and validation utility.
-- [ ] Add finite-difference gradient checks for logistic regression, MLP layers, and loss functions.
-- [ ] Add tests for deterministic behavior under fixed random seeds.
-- [ ] Add convergence tests on small synthetic datasets.
-- [ ] Add edge-case tests for empty arrays, wrong shapes, invalid labels, NaNs, and infinities.
-- [ ] Add smoke tests for FastAPI health and prediction endpoints.
+- [x] Add pytest unit tests for every estimator, metric, optimizer, validation utility, pipeline, and API surface.
+- [x] Add finite-difference gradient checks for logistic regression, MLP layers, and loss functions.
+- [x] Add tests for deterministic behavior under fixed random seeds.
+- [x] Add convergence tests on small synthetic datasets.
+- [x] Add edge-case tests for empty arrays, wrong shapes, invalid labels, NaNs, and infinities.
+- [x] Add smoke tests for FastAPI health and prediction endpoints.
 - [ ] Add Docker build smoke tests.
-- [ ] Configure GitHub Actions for pytest, Black, Ruff, and mypy.
-- [ ] Add coverage reporting and minimum coverage thresholds once the codebase stabilizes.
-- [ ] Add pre-commit configuration for local formatting and linting.
-- [ ] Add CI caching for Python dependencies.
-- [ ] Add release checklist for tags, changelog updates, and version bumps.
+- [x] Configure GitHub Actions for pytest, Black, Ruff, and mypy.
+- [x] Add coverage reporting without an enforced threshold while the codebase stabilizes.
+- [x] Add pre-commit configuration for local formatting and linting.
+- [x] Add CI caching for Python dependencies.
+- [x] Add release checklist for tags, changelog updates, and version bumps.
 
 ### Deliverables
 
 - Comprehensive `tests/` coverage across math, models, metrics, pipeline, and API.
 - `tests/test_gradients.py` with finite-difference gradient checks.
 - `.github/workflows/ci.yml` running format, lint, type, and test checks.
-- Optional `.pre-commit-config.yaml` for local quality gates.
+- `.pre-commit-config.yaml` for local quality gates.
 - CI badge in `README.md` after the public GitHub workflow is active.
 
 ## Suggested Milestones
