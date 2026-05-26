@@ -1,5 +1,7 @@
 # NumPyForge
 
+[![CI](https://github.com/yashasviudayan-py/NumPyForge/actions/workflows/ci.yml/badge.svg)](https://github.com/yashasviudayan-py/NumPyForge/actions/workflows/ci.yml)
+
 Custom machine learning components implemented from scratch with NumPy, plus a production-oriented training and serving scaffold.
 
 ## Quickstart
@@ -12,6 +14,41 @@ pip install -r requirements.txt
 pytest
 uvicorn api.main:app --reload
 ```
+
+## What This Project Demonstrates
+
+NumPyForge is a complete learning-to-production arc:
+
+- Core ML math implemented with NumPy: validation, stable numerical helpers, losses, and
+  estimator abstractions.
+- Classical supervised learning from scratch: linear regression, logistic regression, softmax
+  regression, gradient descent, regularization, sample weights, and class weights.
+- Deep learning internals from scratch: dense layers, activations, dropout, losses,
+  backpropagation, optimizers, learning-rate schedules, and MLP estimators.
+- Evaluation discipline: train/test splits, cross-validation, model search, metrics, baselines,
+  ROC/PR curves, and JSON-ready reports.
+- Production loop: deterministic ingestion, training, MLflow-compatible tracking, versioned model
+  artifacts, FastAPI serving, Docker packaging, and structured logs.
+- Quality system: unit tests, finite-difference gradient checks, coverage reporting, pre-commit,
+  and GitHub Actions CI.
+
+## One Command Path
+
+After installing development dependencies, this path exercises the full local workflow:
+
+```bash
+python -m pip install -e ".[dev]"
+make quality
+make coverage
+make ingest
+make train
+make evaluate
+make docker-build
+make serve
+```
+
+`make train` writes a local artifact under `models/current/`; `make serve` exposes it through the
+FastAPI app. Runtime artifacts are ignored by git.
 
 ## Project Layout
 
@@ -199,6 +236,8 @@ make serve
 make quality
 make test
 ```
+
+Post-`v0.1.0` ideas are tracked in `ROADMAP.md`.
 
 ## Testing And CI
 

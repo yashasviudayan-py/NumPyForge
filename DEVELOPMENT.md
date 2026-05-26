@@ -201,7 +201,7 @@ Make correctness enforceable with tests, numerical checks, linting, type checkin
 - [x] Add convergence tests on small synthetic datasets.
 - [x] Add edge-case tests for empty arrays, wrong shapes, invalid labels, NaNs, and infinities.
 - [x] Add smoke tests for FastAPI health and prediction endpoints.
-- [ ] Add Docker build smoke tests.
+- [x] Add Docker build smoke tests.
 - [x] Configure GitHub Actions for pytest, Black, Ruff, and mypy.
 - [x] Add coverage reporting without an enforced threshold while the codebase stabilizes.
 - [x] Add pre-commit configuration for local formatting and linting.
