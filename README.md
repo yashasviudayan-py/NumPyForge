@@ -4,6 +4,14 @@
 
 Custom machine learning components implemented from scratch with NumPy, plus a production-oriented training and serving scaffold.
 
+## Project Links
+
+- [Demo walkthrough](DEMO.md)
+- [Portfolio and interview notes](PORTFOLIO.md)
+- [Release notes](CHANGELOG.md)
+- [Future roadmap](ROADMAP.md)
+- [Release checklist](RELEASE.md)
+
 ## Quickstart
 
 ```bash
@@ -40,6 +48,7 @@ After installing development dependencies, this path exercises the full local wo
 python -m pip install -e ".[dev]"
 make quality
 make coverage
+make demo
 make ingest
 make train
 make evaluate

@@ -1,4 +1,4 @@
-.PHONY: ingest train evaluate serve quality test coverage docker-build compose-up
+.PHONY: ingest train evaluate demo serve quality test coverage docker-build compose-up
 
 ingest:
 	python -m pipeline.ingest
@@ -8,6 +8,9 @@ train:
 
 evaluate:
 	python -m pipeline.evaluate
+
+demo:
+	python examples/portfolio_demo.py
 
 serve:
 	uvicorn api.main:app --reload
