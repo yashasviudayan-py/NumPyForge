@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib
 import json
 import os
 import sys
@@ -14,7 +15,7 @@ from typing import Any, Self, cast
 import numpy as np
 
 try:
-    import mlflow as _mlflow
+    _mlflow: Any = importlib.import_module("mlflow")
 except ModuleNotFoundError:
     _mlflow = None
 

@@ -371,7 +371,13 @@ class LogisticRegression(BaseClassifier):
         sample_weight: FloatArray | None,
     ) -> None:
         parameters: OptimizerParameters = {
-            "weights": self._rng().normal(loc=0.0, scale=0.01, size=X.shape[1]).astype(np.float64),
+            "weights": cast(
+                FloatArray,
+                np.asarray(
+                    self._rng().normal(loc=0.0, scale=0.01, size=X.shape[1]),
+                    dtype=np.float64,
+                ),
+            ),
             "bias": np.zeros(1, dtype=np.float64),
         }
         y_float = cast(FloatArray, y_encoded.astype(np.float64))
