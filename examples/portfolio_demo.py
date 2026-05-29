@@ -87,7 +87,7 @@ def _write_training_config(workspace: Path) -> Path:
             "experiment_name": "numpyforge-portfolio-demo",
             "run_name": "portfolio-demo",
             "tags": {"demo": "portfolio"},
-            "tracking_uri": f"file:{workspace / 'mlruns'}",
+            "tracking_uri": f"sqlite:///{workspace / 'mlflow.db'}",
         },
         "model": {
             "batch_strategy": "batch",

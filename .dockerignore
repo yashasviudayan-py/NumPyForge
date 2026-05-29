@@ -17,4 +17,5 @@ data/raw/*
 data/processed/*
 models/*
 mlruns
+mlflow.db*
 artifacts

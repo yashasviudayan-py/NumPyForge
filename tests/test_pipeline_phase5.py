@@ -80,7 +80,7 @@ def _write_config(tmp_path: Path) -> Path:
             "experiment_name": "test-experiment",
             "run_name": "test-run",
             "tags": {"phase": "5"},
-            "tracking_uri": f"file:{tmp_path / 'mlruns'}",
+            "tracking_uri": f"sqlite:///{tmp_path / 'mlflow.db'}",
         },
         "model": {
             "learning_rate": 0.2,

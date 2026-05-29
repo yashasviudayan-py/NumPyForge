@@ -5,7 +5,7 @@ services:
       - "8000:8000"
     environment:
       NUMPYFORGE_ARTIFACT_DIR: /app/models/current
-      MLFLOW_TRACKING_URI: file:///app/mlruns
+      MLFLOW_TRACKING_URI: sqlite:////app/mlruns/mlflow.db
     volumes:
       - ./models:/app/models
       - ./mlruns:/app/mlruns
@@ -22,7 +22,7 @@ services:
       - --port
       - "5000"
       - --backend-store-uri
-      - file:///app/mlruns
+      - sqlite:////app/mlruns/mlflow.db
       - --default-artifact-root
       - /app/mlruns/artifacts
     ports:

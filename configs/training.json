@@ -16,7 +16,7 @@
       "model_type": "binary_logistic_regression",
       "phase": "5"
     },
-    "tracking_uri": "file:mlruns"
+    "tracking_uri": "sqlite:///mlflow.db"
   },
   "model": {
     "batch_strategy": "batch",
