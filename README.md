@@ -1,13 +1,26 @@
 # NumPyForge
 
 [![CI](https://github.com/yashasviudayan-py/NumPyForge/actions/workflows/ci.yml/badge.svg)](https://github.com/yashasviudayan-py/NumPyForge/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![NumPy](https://img.shields.io/badge/core-NumPy-013243?logo=numpy&logoColor=white)](https://numpy.org/)
+[![FastAPI](https://img.shields.io/badge/serving-FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Docker](https://img.shields.io/badge/docker-build%20smoke-2496ED?logo=docker&logoColor=white)](Dockerfile)
+[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000)](https://github.com/psf/black)
+[![Lint: Ruff](https://img.shields.io/badge/lint-ruff-D7FF64)](https://docs.astral.sh/ruff/)
+[![Types: mypy](https://img.shields.io/badge/types-mypy-2A6DB2)](https://mypy-lang.org/)
 
 Custom machine learning components implemented from scratch with NumPy, plus a production-oriented training and serving scaffold.
+
+![NumPyForge architecture](assets/architecture.svg)
 
 ## Project Links
 
 - [Demo walkthrough](DEMO.md)
+- [Case study](CASE_STUDY.md)
 - [Portfolio and interview notes](PORTFOLIO.md)
+- [API request examples](docs/api_examples.http)
+- [Demo recording guide](docs/demo_recording.md)
+- [GitHub presentation checklist](docs/github_polish.md)
 - [Release notes](CHANGELOG.md)
 - [Future roadmap](ROADMAP.md)
 - [Release checklist](RELEASE.md)
@@ -40,6 +53,14 @@ NumPyForge is a complete learning-to-production arc:
 - Quality system: unit tests, finite-difference gradient checks, coverage reporting, pre-commit,
   and GitHub Actions CI.
 
+## Why It Stands Out
+
+This is intentionally more than an algorithm repo. The models are implemented from first principles,
+then treated like production software: validated inputs, typed APIs, finite-difference checks,
+artifact loading, readiness semantics, JSON reports, container smoke tests, and a recruiter-friendly
+demo path. The project is designed so an interviewer can inspect the math, run the pipeline, and see
+the service boundary without needing a notebook or hidden external dataset.
+
 ## One Command Path
 
 After installing development dependencies, this path exercises the full local workflow:
@@ -58,6 +79,18 @@ make serve
 
 `make train` writes a local artifact under `models/current/`; `make serve` exposes it through the
 FastAPI app. Runtime artifacts are ignored by git.
+
+## Mini Case Study
+
+**Problem:** most learning ML projects end at a notebook, while most MLOps examples hide the model
+behind external libraries.
+
+**Solution:** NumPyForge bridges both sides: it implements the learning algorithms in NumPy and wraps
+them with the operational pieces expected in a backend/MLOps codebase.
+
+**Result:** the project demonstrates numerical ML fundamentals, API design, artifact lifecycle,
+testing discipline, Docker packaging, and CI/CD in one coherent repo. The longer version is in
+[CASE_STUDY.md](CASE_STUDY.md).
 
 ## Project Layout
 
@@ -219,8 +252,8 @@ python pipeline/evaluate.py
 Phase 5 turns the binary `LogisticRegression` demo into a local production loop:
 
 - `python -m pipeline.ingest` creates a deterministic processed dataset.
-- `python -m pipeline.train` trains the model, logs metrics to MLflow when available, and writes
-  a versioned artifact under `models/current/`.
+- `python -m pipeline.train` trains the model, logs metrics to a local MLflow SQLite backend when
+  available, and writes a versioned artifact under `models/current/`.
 - `python -m pipeline.evaluate` loads the saved artifact and reports holdout metrics as JSON.
 - `uvicorn api.main:app --reload` serves the saved artifact through FastAPI.
 
@@ -233,7 +266,7 @@ The serving API exposes:
 
 The API does not train a fallback model on import. If `models/current/` is missing or invalid,
 readiness and prediction return HTTP 503 while health remains available. Runtime data, model
-artifacts, and MLflow runs are intentionally ignored by git.
+artifacts, and MLflow tracking files are intentionally ignored by git.
 
 Common workflow commands are available through `make`:
 

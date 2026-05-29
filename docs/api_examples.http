@@ -1,0 +1,29 @@
+### Health: process is alive even before a model artifact exists.
+GET http://127.0.0.1:8000/health
+
+### Readiness: confirms whether a valid artifact is loaded.
+GET http://127.0.0.1:8000/ready
+
+### Metadata: available after `make train` and API startup.
+GET http://127.0.0.1:8000/metadata
+
+### Predict: binary predictions and positive-class probabilities.
+POST http://127.0.0.1:8000/predict
+Content-Type: application/json
+
+{
+  "features": [
+    [0.0, 0.0],
+    [1.0, 1.0]
+  ]
+}
+
+### Validation example: wrong feature count should return an error.
+POST http://127.0.0.1:8000/predict
+Content-Type: application/json
+
+{
+  "features": [
+    [0.0, 0.0, 0.0]
+  ]
+}

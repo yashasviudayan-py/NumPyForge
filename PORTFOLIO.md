@@ -71,3 +71,12 @@ Then explain:
 3. Evaluation reports holdout metrics.
 4. The FastAPI app loads the artifact.
 5. The demo calls the API through `TestClient`, proving serving behavior without external infra.
+
+## Repo Presentation Assets
+
+- [Case study](CASE_STUDY.md) for a concise project narrative.
+- [Demo walkthrough](DEMO.md) for recruiter/interviewer review.
+- [API examples](docs/api_examples.http) for manual endpoint checks.
+- [Demo recording guide](docs/demo_recording.md) for a short GIF or screen recording.
+- [GitHub polish checklist](docs/github_polish.md) for repo topics, social preview, and pinned
+  repo text.

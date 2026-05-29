@@ -20,10 +20,11 @@ Use this checklist to cut a NumPyForge release.
 - [ ] Create and push the release tag:
   - `git tag v0.1.0`
   - `git push origin v0.1.0`
-- [ ] Create the GitHub release using the `CHANGELOG.md` `v0.1.0` notes.
+- [ ] Create the GitHub release using the prepared release notes:
+  - `gh release create v0.1.0 --title "NumPyForge v0.1.0" --notes-file docs/release_notes_v0.1.0.md`
 
 ## Release Policy
 
-- Keep runtime data, model artifacts, and MLflow runs out of git.
+- Keep runtime data, model artifacts, and MLflow tracking files out of git.
 - Do not publish Docker images until an explicit distribution target is chosen.
 - Add a coverage threshold only after the project has stabilized beyond `v0.1.0`.

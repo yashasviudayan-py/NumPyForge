@@ -1,6 +1,6 @@
 # Changelog
 
-## v0.1.0 - 2026-05-26
+## v0.1.0 - 2026-05-29
 
 Initial release of NumPyForge as a from-scratch ML framework and production pipeline.
 
@@ -19,6 +19,8 @@ Initial release of NumPyForge as a from-scratch ML framework and production pipe
   local MLflow tracking support, FastAPI serving, structured logs, Docker, and Docker Compose.
 - CI/CD tooling with GitHub Actions, Black, Ruff, mypy, pytest coverage reporting, pipeline smoke
   tests, Docker build smoke tests, and pre-commit hooks.
+- Portfolio demo kit with a guided walkthrough, case study, API request examples, architecture
+  artwork, resume/interview notes, and a short demo recording guide.
 
 ### Notes
 

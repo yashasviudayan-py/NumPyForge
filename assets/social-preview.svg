@@ -1,0 +1,22 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">NumPyForge social preview</title>
+  <desc id="desc">Social preview image for NumPyForge.</desc>
+  <rect width="1280" height="640" fill="#08111F"/>
+  <rect x="72" y="72" width="1136" height="496" rx="32" fill="#111827" stroke="#334155" stroke-width="3"/>
+  <text x="116" y="178" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="78" font-weight="800">NumPyForge</text>
+  <text x="120" y="234" fill="#38BDF8" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700">From-scratch ML framework + production pipeline</text>
+  <text x="120" y="304" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="25">Pure NumPy models. Gradient checks. Evaluation tools. MLflow artifacts.</text>
+  <text x="120" y="342" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="25">FastAPI serving. Docker. GitHub Actions CI.</text>
+  <g transform="translate(120 420)">
+    <rect width="168" height="54" rx="12" fill="#172554" stroke="#3B82F6"/>
+    <text x="28" y="35" fill="#DBEAFE" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">NumPy</text>
+    <rect x="190" width="168" height="54" rx="12" fill="#052E2B" stroke="#14B8A6"/>
+    <text x="218" y="35" fill="#CCFBF1" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">FastAPI</text>
+    <rect x="380" width="168" height="54" rx="12" fill="#3B1A24" stroke="#FB7185"/>
+    <text x="408" y="35" fill="#FFE4E6" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">MLOps</text>
+    <rect x="570" width="168" height="54" rx="12" fill="#422006" stroke="#F59E0B"/>
+    <text x="598" y="35" fill="#FEF3C7" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700">CI/CD</text>
+  </g>
+  <path d="M880 186C961 152 1060 171 1118 236C1185 311 1153 438 1061 475C968 513 862 456 844 358C830 281 821 211 880 186Z" fill="#0F766E" opacity="0.28"/>
+  <path d="M950 230H1088M950 292H1088M950 354H1088M950 416H1088" stroke="#38BDF8" stroke-width="12" stroke-linecap="round"/>
+</svg>

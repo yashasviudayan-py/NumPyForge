@@ -2,6 +2,8 @@
 
 This is a five-minute walkthrough for showing NumPyForge as a Backend/MLOps project.
 
+![NumPyForge architecture](assets/architecture.svg)
+
 ## What To Show
 
 NumPyForge starts with from-scratch NumPy models and ends with a production-style loop:
@@ -65,6 +67,15 @@ curl -X POST http://127.0.0.1:8000/predict \
   -d '{"features": [[0.0, 0.0], [1.0, 1.0]]}'
 ```
 
+The same requests are available in [docs/api_examples.http](docs/api_examples.http) for editors
+that support `.http` files.
+
+## Recording A Short Demo
+
+Use [docs/demo_recording.md](docs/demo_recording.md) as the shot list for a 60-90 second GIF or
+screen recording. The recommended clip is simple: show the README badges and architecture, run
+`make demo`, then show the green GitHub Actions `quality` and `docker-smoke` jobs.
+
 ## What To Say
 
 - The model code is pure NumPy so the math is inspectable.
@@ -76,6 +87,6 @@ curl -X POST http://127.0.0.1:8000/predict \
 
 - If `/ready` returns 503, run `make train` to create `models/current/`.
 - If MLflow is not installed locally, training falls back gracefully while preserving the artifact
-  workflow. A normal runtime install includes MLflow.
+  workflow. A normal runtime install uses a local SQLite tracking backend.
 - If Docker build fails locally with a socket error, start Docker Desktop or rely on the GitHub
   Actions Docker smoke job.
