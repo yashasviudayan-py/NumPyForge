@@ -1,5 +1,28 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- Renamed the core library package from `src` to `numpyforge`, so it is imported as
+  `from numpyforge... import ...` to match the distribution name. All internal modules, tests,
+  examples, pipeline/API entrypoints, tooling config (ruff, coverage, mypy, packaging), CI, and
+  docs were updated accordingly. Added a `py.typed` marker so the package ships as typed.
+
+### Fixed
+
+- `roc_auc_score`/`pr_auc_score` use `np.trapezoid`, which only exists in NumPy 2.0+. The dependency
+  floor was raised to `numpy>=2.0.0` (in `pyproject.toml` and `requirements.txt`) so the declared
+  range matches the code and the metrics no longer break on NumPy 1.26.x.
+
+### Added
+
+- MIT `LICENSE` file plus `license` metadata and trove classifiers in `pyproject.toml`.
+- Coverage threshold enforcement (`fail_under = 85`) so CI fails on coverage regressions.
+- Optional scikit-learn parity tests (`tests/test_sklearn_parity.py`, `[test]` extra) that
+  cross-check the from-scratch linear models and metrics against scikit-learn within machine-epsilon
+  tolerances. The suite is skipped when scikit-learn is absent.
+
 ## v0.1.0 - 2026-05-29
 
 Initial release of NumPyForge as a from-scratch ML framework and production pipeline.

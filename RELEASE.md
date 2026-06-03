@@ -8,8 +8,8 @@ Use this checklist to cut a NumPyForge release.
 - [ ] Run local quality checks:
   - `python -m black --check .`
   - `python -m ruff check .`
-  - `python -m mypy src api pipeline tests`
-  - `python -m pytest --cov=src --cov=api --cov=pipeline --cov-report=term-missing`
+  - `python -m mypy numpyforge api pipeline tests`
+  - `python -m pytest --cov=numpyforge --cov=api --cov=pipeline --cov-report=term-missing`
 - [ ] Run local pipeline smoke checks:
   - `python -m pipeline.ingest`
   - `python -m pipeline.train`
