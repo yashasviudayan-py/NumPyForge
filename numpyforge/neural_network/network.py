@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from src.neural_network.layers import Layer
-from src.optimizers import OptimizerParameters
-from src.types import FloatArray
+from numpyforge.neural_network.layers import Layer
+from numpyforge.optimizers import OptimizerParameters
+from numpyforge.types import FloatArray
 
 
 class SequentialNetwork:

@@ -6,9 +6,9 @@ from typing import cast
 
 import numpy as np
 
-from src.base import BaseClassifier, BaseRegressor
-from src.types import FloatArray, IntArray, RawArrayLike
-from src.validation import check_class_labels
+from numpyforge.base import BaseClassifier, BaseRegressor
+from numpyforge.types import FloatArray, IntArray, RawArrayLike
+from numpyforge.validation import check_class_labels
 
 
 class MajorityClassClassifier(BaseClassifier):

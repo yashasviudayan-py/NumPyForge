@@ -16,4 +16,5 @@ NumPy-first character.
   data available for tests.
 - Build a documentation site with equations, implementation notes, API examples, and end-to-end
   tutorials.
-- Add coverage thresholds and optional Docker image publishing once release workflows stabilize.
+- Optional Docker image publishing once release workflows stabilize. (Coverage thresholds and
+  scikit-learn parity checks landed post-`v0.1.0`.)

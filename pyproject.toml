@@ -8,8 +8,21 @@ version = "0.1.0"
 description = "Custom machine learning components implemented from scratch with NumPy."
 readme = "README.md"
 requires-python = ">=3.11"
+license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
 dependencies = [
-    "numpy>=1.26.0,<3.0.0",
+    # roc_auc_score / pr_auc_score use np.trapezoid, which was added in NumPy 2.0.
+    "numpy>=2.0.0,<3.0.0",
     "fastapi>=0.115.0,<1.0.0",
     "uvicorn[standard]>=0.30.0,<1.0.0",
     "mlflow>=2.16.0,<4.0.0",
@@ -24,11 +37,20 @@ dev = [
     "pytest>=8.3.0,<10.0.0",
     "pytest-cov>=6.0.0,<8.0.0",
     "ruff>=0.6.0,<1.0.0",
+    "scikit-learn>=1.4.0,<2.0.0",
+]
+# Reference implementation used only to cross-check NumPyForge's from-scratch
+# math in tests/test_sklearn_parity.py. The library itself never imports it.
+test = [
+    "scikit-learn>=1.4.0,<2.0.0",
 ]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["api*", "pipeline*", "src*"]
+include = ["api*", "pipeline*", "numpyforge*"]
+
+[tool.setuptools.package-data]
+numpyforge = ["py.typed"]
 
 [tool.black]
 line-length = 100
@@ -41,23 +63,24 @@ testpaths = ["tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["api", "pipeline", "src"]
+source = ["api", "pipeline", "numpyforge"]
 
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
+fail_under = 85
 
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["api", "examples", "pipeline", "src", "tests"]
+src = ["api", "examples", "numpyforge", "pipeline", "tests"]
 
 [tool.ruff.lint]
 select = ["B", "E", "F", "I", "UP"]
 ignore = []
 
 [tool.ruff.lint.isort]
-known-first-party = ["api", "pipeline", "src"]
+known-first-party = ["api", "pipeline", "numpyforge"]
 
 [tool.mypy]
 python_version = "3.11"
@@ -67,3 +90,8 @@ warn_unused_ignores = true
 disallow_untyped_defs = true
 no_implicit_optional = true
 check_untyped_defs = true
+
+# scikit-learn ships no type stubs and is only used by the optional parity tests.
+[[tool.mypy.overrides]]
+module = ["sklearn.*"]
+ignore_missing_imports = true

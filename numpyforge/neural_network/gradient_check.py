@@ -6,7 +6,7 @@ from collections.abc import Callable
 
 import numpy as np
 
-from src.types import FloatArray
+from numpyforge.types import FloatArray
 
 
 def gradient_check(

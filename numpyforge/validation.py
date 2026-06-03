@@ -10,7 +10,7 @@ from typing import Literal, cast
 
 import numpy as np
 
-from src.types import ArrayLike, FloatArray, IntArray, RawArrayLike
+from numpyforge.types import ArrayLike, FloatArray, IntArray, RawArrayLike
 
 Penalty = Literal["l1", "l2", None]
 Solver = Literal["normal_equation", "gradient_descent"]

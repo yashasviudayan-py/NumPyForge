@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from src.math import (
+from numpyforge.math import (
     binary_cross_entropy,
     categorical_cross_entropy,
     clip_probabilities,

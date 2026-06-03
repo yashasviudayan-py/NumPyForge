@@ -7,8 +7,8 @@ from typing import Protocol, Self, cast
 
 import numpy as np
 
-from src.random import check_random_state
-from src.types import (
+from numpyforge.random import check_random_state
+from numpyforge.types import (
     ArrayLike,
     FloatArray,
     ParameterState,
@@ -16,7 +16,7 @@ from src.types import (
     RandomState,
     RawArrayLike,
 )
-from src.validation import (
+from numpyforge.validation import (
     check_feature_matrix,
     check_matching_n_features,
     check_target_vector,

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from src.types import RandomState
+from numpyforge.types import RandomState
 
 
 def check_random_state(random_state: RandomState = None) -> np.random.Generator:

@@ -10,8 +10,8 @@ import numpy as np
 from fastapi.testclient import TestClient
 
 from api.main import create_app
-from src.artifacts import save_logistic_artifact
-from src.linear_model import LogisticRegression
+from numpyforge.artifacts import save_logistic_artifact
+from numpyforge.linear_model import LogisticRegression
 
 
 def test_health_succeeds_without_artifact(tmp_path: Path) -> None:

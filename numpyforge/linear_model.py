@@ -7,8 +7,8 @@ from typing import Literal, cast
 
 import numpy as np
 
-from src.base import BaseClassifier, BaseRegressor
-from src.math import (
+from numpyforge.base import BaseClassifier, BaseRegressor
+from numpyforge.math import (
     binary_cross_entropy,
     categorical_cross_entropy,
     mean_squared_error,
@@ -16,14 +16,14 @@ from src.math import (
     softmax,
     stable_sigmoid,
 )
-from src.optimizers import (
+from numpyforge.optimizers import (
     BatchStrategy,
     GradientDescentConfig,
     OptimizerParameters,
     run_gradient_descent,
 )
-from src.types import FloatArray, IntArray, RawArrayLike
-from src.validation import (
+from numpyforge.types import FloatArray, IntArray, RawArrayLike
+from numpyforge.validation import (
     check_class_weight,
     check_linear_solver_penalty,
     check_multiclass_targets,

@@ -11,7 +11,7 @@ from typing import cast
 
 import numpy as np
 
-from src.types import FloatArray, IntArray
+from numpyforge.types import FloatArray, IntArray
 
 
 def stable_sigmoid(values: FloatArray) -> FloatArray:

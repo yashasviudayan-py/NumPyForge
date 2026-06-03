@@ -31,10 +31,10 @@ jobs:
         run: python -m ruff check .
 
       - name: Type check
-        run: python -m mypy src api pipeline tests
+        run: python -m mypy numpyforge api pipeline tests
 
       - name: Test with coverage
-        run: python -m pytest --cov=src --cov=api --cov=pipeline --cov-report=term-missing
+        run: python -m pytest --cov=numpyforge --cov=api --cov=pipeline --cov-report=term-missing
 
       - name: Pipeline smoke test
         run: |

@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from typing import Any, TypeVar, cast
 
-from src.types import PathLikeString
+from numpyforge.types import PathLikeString
 
 Config = dict[str, Any]
 T = TypeVar("T")

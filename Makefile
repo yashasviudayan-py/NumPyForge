@@ -18,13 +18,13 @@ serve:
 quality:
 	python -m black --check .
 	python -m ruff check .
-	python -m mypy src api pipeline tests
+	python -m mypy numpyforge api pipeline tests
 
 test:
 	python -m pytest
 
 coverage:
-	python -m pytest --cov=src --cov=api --cov=pipeline --cov-report=term-missing
+	python -m pytest --cov=numpyforge --cov=api --cov=pipeline --cov-report=term-missing
 
 docker-build:
 	docker build -t numpyforge:latest .

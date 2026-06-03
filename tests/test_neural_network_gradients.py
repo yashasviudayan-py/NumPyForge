@@ -6,15 +6,15 @@ from typing import cast
 
 import numpy as np
 
-from src.neural_network.gradient_check import gradient_check
-from src.neural_network.layers import Dense, TanhActivation
-from src.neural_network.losses import (
+from numpyforge.neural_network.gradient_check import gradient_check
+from numpyforge.neural_network.layers import Dense, TanhActivation
+from numpyforge.neural_network.losses import (
     BinaryCrossEntropyLoss,
     CategoricalCrossEntropyLoss,
     MeanSquaredErrorLoss,
 )
-from src.neural_network.network import SequentialNetwork
-from src.types import FloatArray
+from numpyforge.neural_network.network import SequentialNetwork
+from numpyforge.types import FloatArray
 
 
 def test_dense_weight_gradient_passes_finite_difference_check() -> None:

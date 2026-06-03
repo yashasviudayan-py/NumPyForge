@@ -36,9 +36,9 @@ Build the shared foundation for estimators, tensor-like NumPy utilities, validat
 
 ### Deliverables
 
-- `src/base.py` with production-quality estimator abstractions.
-- `src/math.py` or `src/utils/math.py` with vectorized numerical helpers.
-- `src/validation.py` for shared input validation.
+- `numpyforge/base.py` with production-quality estimator abstractions.
+- `numpyforge/math.py` or `numpyforge/utils/math.py` with vectorized numerical helpers.
+- `numpyforge/validation.py` for shared input validation.
 - Typed docstrings explaining array shapes and return values.
 - Unit tests for validation behavior, numerical helpers, and fitted-state checks.
 
@@ -71,8 +71,8 @@ Implement classical supervised learning models using pure NumPy and optimization
 
 ### Deliverables
 
-- `src/linear_model.py` with linear regression, binary logistic regression, and multiclass logistic regression.
-- `src/optimizers.py` with reusable gradient-descent variants.
+- `numpyforge/linear_model.py` with linear regression, binary logistic regression, and multiclass logistic regression.
+- `numpyforge/optimizers.py` with reusable gradient-descent variants.
 - `examples/classical_ml.ipynb` or script-based examples under `examples/`.
 - Tests for convergence, regularization effects, shape validation, and deterministic training.
 - README section explaining the CS229 objective functions behind each model.
@@ -107,7 +107,7 @@ Build a small neural-network module that teaches the mechanics of forward passes
 
 ### Deliverables
 
-- `src/neural_network/` package with layers, activations, losses, initializers, and MLP estimators.
+- `numpyforge/neural_network/` package with layers, activations, losses, initializers, and MLP estimators.
 - Pure NumPy optimizers with tests against hand-computed updates.
 - Gradient-checking utilities for validating backpropagation.
 - Example notebooks or scripts visualizing training curves and decision boundaries.
@@ -141,8 +141,8 @@ Create a framework-native model-selection and evaluation layer so experiments ca
 
 ### Deliverables
 
-- `src/model_selection.py` for splits, folds, and search utilities.
-- `src/metrics.py` for classification and regression metrics.
+- `numpyforge/model_selection.py` for splits, folds, and search utilities.
+- `numpyforge/metrics.py` for classification and regression metrics.
 - `pipeline/evaluate.py` for repeatable local evaluation runs.
 - Evaluation artifacts such as JSON reports and optional plots.
 - Documentation showing how to choose metrics for imbalanced classification and regression.
@@ -272,7 +272,7 @@ Run these before committing:
 ```bash
 python -m black --check .
 python -m ruff check .
-python -m mypy src api pipeline tests
+python -m mypy numpyforge api pipeline tests
 python -m pytest
 ```
 

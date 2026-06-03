@@ -15,12 +15,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
+from numpyforge.artifacts import load_logistic_artifact  # noqa: E402
+from numpyforge.config import Config, get_config_value, load_json_config  # noqa: E402
+from numpyforge.metrics import classification_report_dict, log_loss  # noqa: E402
+from numpyforge.model_selection import train_test_split  # noqa: E402
+from numpyforge.types import FloatArray, IntArray  # noqa: E402
 from pipeline.ingest import create_demo_dataset  # noqa: E402
-from src.artifacts import load_logistic_artifact  # noqa: E402
-from src.config import Config, get_config_value, load_json_config  # noqa: E402
-from src.metrics import classification_report_dict, log_loss  # noqa: E402
-from src.model_selection import train_test_split  # noqa: E402
-from src.types import FloatArray, IntArray  # noqa: E402
 
 DEFAULT_CONFIG = PROJECT_ROOT / "configs" / "evaluation.json"
 

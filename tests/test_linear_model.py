@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from src.linear_model import LinearRegression, LogisticRegression
+from numpyforge.linear_model import LinearRegression, LogisticRegression
 
 
 def test_linear_regression_normal_equation_recovers_known_coefficients() -> None:

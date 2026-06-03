@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from src.validation import (
+from numpyforge.validation import (
     check_binary_targets,
     check_class_labels,
     check_class_weight,

@@ -8,6 +8,7 @@
 [![Code style: Black](https://img.shields.io/badge/code%20style-black-000000)](https://github.com/psf/black)
 [![Lint: Ruff](https://img.shields.io/badge/lint-ruff-D7FF64)](https://docs.astral.sh/ruff/)
 [![Types: mypy](https://img.shields.io/badge/types-mypy-2A6DB2)](https://mypy-lang.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 Custom machine learning components implemented from scratch with NumPy, plus a production-oriented training and serving scaffold.
 
@@ -102,7 +103,7 @@ testing discipline, Docker packaging, and CI/CD in one coherent repo. The longer
 ├── examples/             # Developer examples and learning walkthroughs
 ├── models/               # Serialized model artifacts, ignored by git
 ├── pipeline/             # Data ingestion and training entrypoints
-├── src/                  # Core NumPy ML library
+├── numpyforge/           # Core NumPy ML library
 └── tests/                # Unit tests
 ```
 
@@ -129,12 +130,12 @@ NumPyForge estimators follow a small, explicit contract inspired by scikit-learn
 
 Core Phase 1 utilities live in:
 
-- `src/base.py` for estimator abstractions, classifier/regressor bases, fitted-state checks, loss
+- `numpyforge/base.py` for estimator abstractions, classifier/regressor bases, fitted-state checks, loss
   protocols, and parameter serialization.
-- `src/validation.py` for reusable feature, target, class-label, and sample-weight validation.
-- `src/math.py` for stable vectorized operations such as sigmoid, softmax, log-sum-exp, one-hot
+- `numpyforge/validation.py` for reusable feature, target, class-label, and sample-weight validation.
+- `numpyforge/math.py` for stable vectorized operations such as sigmoid, softmax, log-sum-exp, one-hot
   encoding, clipping, and L2 norms.
-- `src/random.py` for deterministic random-state handling.
+- `numpyforge/random.py` for deterministic random-state handling.
 
 Run the estimator lifecycle example with:
 
@@ -152,7 +153,7 @@ multiclass softmax regression.
 - `solver="normal_equation"` computes the closed-form least-squares solution with
   `np.linalg.pinv`. This handles ordinary least squares and ridge regression (`penalty="l2"`).
 - `solver="gradient_descent"` minimizes mean squared error with the reusable optimizer in
-  `src/optimizers.py`. This path supports no penalty, L1, and L2 regularization.
+  `numpyforge/optimizers.py`. This path supports no penalty, L1, and L2 regularization.
 
 `LogisticRegression` supports binary and multiclass classification in one estimator:
 
@@ -196,7 +197,7 @@ The public MLP API supports:
 - Training histories: `loss_history_`, `validation_loss_history_`, `learning_rate_history_`,
   `n_iter_`, and `converged_`.
 
-Neural-network internals live under `src/neural_network/`:
+Neural-network internals live under `numpyforge/neural_network/`:
 
 - `layers.py` contains `Dense`, dropout, and activation layers.
 - `losses.py` contains MSE, binary cross-entropy, and categorical cross-entropy losses.
@@ -221,7 +222,7 @@ python examples/neural_networks.py
 Phase 4 adds framework-native evaluation utilities for deterministic experiments and model
 selection.
 
-Data splitting and model selection live in `src/model_selection.py`:
+Data splitting and model selection live in `numpyforge/model_selection.py`:
 
 - `train_test_split` supports deterministic shuffling and optional stratification.
 - `k_fold_split` and `stratified_k_fold_split` yield train/test index pairs for cross-validation.
@@ -230,7 +231,7 @@ Data splitting and model selection live in `src/model_selection.py`:
 - `grid_search_cv` and `randomized_search_cv` return `SearchResult` objects with the fitted best
   estimator, best parameters, best score, and fold-level results.
 
-Metrics and reports live in `src/metrics.py`:
+Metrics and reports live in `numpyforge/metrics.py`:
 
 - Classification metrics include accuracy, confusion matrix, precision, recall, F1, log loss,
   ROC-AUC, PR-AUC, ROC curves, and precision-recall curves.
@@ -287,7 +288,10 @@ Phase 6 enforces local and GitHub quality checks:
 
 - GitHub Actions runs Black, Ruff, mypy, pytest coverage reporting, and pipeline smoke tests on
   pushes and pull requests to `main`.
-- Coverage is reported with missing lines but does not currently enforce a minimum threshold.
+- Coverage is reported with missing lines and enforces a minimum threshold (`fail_under = 85`).
+- Optional scikit-learn parity tests (`tests/test_sklearn_parity.py`) cross-check the from-scratch
+  linear models and metrics against scikit-learn within tight tolerances. They are skipped when
+  scikit-learn is not installed, so the core gates stay dependency-light.
 - Pre-commit hooks are available for local formatting and file-hygiene checks.
 
 Install the development extras and hooks with:
@@ -306,3 +310,14 @@ make ingest
 make train
 make evaluate
 ```
+
+To also run the optional scikit-learn parity tests locally:
+
+```bash
+python -m pip install -e ".[test]"
+pytest tests/test_sklearn_parity.py
+```
+
+## License
+
+NumPyForge is released under the [MIT License](LICENSE).

@@ -7,7 +7,7 @@ from typing import cast
 import numpy as np
 import pytest
 
-from src.optimizers import (
+from numpyforge.optimizers import (
     AdamOptimizer,
     GradientDescentConfig,
     LearningRateSchedule,
@@ -17,7 +17,7 @@ from src.optimizers import (
     SGDOptimizer,
     run_gradient_descent,
 )
-from src.types import ArrayLike, FloatArray
+from numpyforge.types import ArrayLike, FloatArray
 
 
 def quadratic_objective(
