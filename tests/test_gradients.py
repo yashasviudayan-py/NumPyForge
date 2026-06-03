@@ -6,10 +6,10 @@ from typing import cast
 
 import numpy as np
 
-from src.linear_model import LogisticRegression
-from src.neural_network.gradient_check import gradient_check
-from src.optimizers import OptimizerParameters
-from src.types import FloatArray
+from numpyforge.linear_model import LogisticRegression
+from numpyforge.neural_network.gradient_check import gradient_check
+from numpyforge.optimizers import OptimizerParameters
+from numpyforge.types import FloatArray
 
 
 def test_binary_logistic_regression_gradient_matches_finite_difference() -> None:

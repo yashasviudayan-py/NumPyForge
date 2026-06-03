@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from src.neural_network.initializers import initialize_parameters
-from src.neural_network.layers import (
+from numpyforge.neural_network.initializers import initialize_parameters
+from numpyforge.neural_network.layers import (
     Dense,
     Dropout,
     Layer,
@@ -15,7 +15,7 @@ from src.neural_network.layers import (
     SoftmaxActivation,
     TanhActivation,
 )
-from src.neural_network.losses import (
+from numpyforge.neural_network.losses import (
     BinaryCrossEntropyLoss,
     CategoricalCrossEntropyLoss,
     MeanSquaredErrorLoss,

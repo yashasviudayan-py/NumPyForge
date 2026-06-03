@@ -6,9 +6,9 @@ from typing import Literal, cast
 
 import numpy as np
 
-from src.math import clip_probabilities
-from src.types import FloatArray, IntArray, RawArrayLike
-from src.validation import check_target_vector
+from numpyforge.math import clip_probabilities
+from numpyforge.types import FloatArray, IntArray, RawArrayLike
+from numpyforge.validation import check_target_vector
 
 AverageMode = Literal["binary", "macro", "micro", "weighted"]
 

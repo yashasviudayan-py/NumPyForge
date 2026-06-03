@@ -7,8 +7,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from src.base import BaseClassifier, BaseRegressor
-from src.types import FloatArray, IntArray, RawArrayLike
+from numpyforge.base import BaseClassifier, BaseRegressor
+from numpyforge.types import FloatArray, IntArray, RawArrayLike
 
 
 class ConstantClassifier(BaseClassifier):

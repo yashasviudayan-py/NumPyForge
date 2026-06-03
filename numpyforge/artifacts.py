@@ -8,8 +8,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, cast
 
-from src.linear_model import LogisticRegression
-from src.types import PathLikeString
+from numpyforge.linear_model import LogisticRegression
+from numpyforge.types import PathLikeString
 
 ARTIFACT_SCHEMA_VERSION = 1
 MODEL_TYPE = "binary_logistic_regression"

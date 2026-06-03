@@ -6,9 +6,9 @@ from typing import cast
 
 import numpy as np
 
-from src.baselines import MajorityClassClassifier, MeanRegressor
-from src.linear_model import LinearRegression, LogisticRegression
-from src.model_selection import (
+from numpyforge.baselines import MajorityClassClassifier, MeanRegressor
+from numpyforge.linear_model import LinearRegression, LogisticRegression
+from numpyforge.model_selection import (
     clone_estimator,
     cross_val_score,
     grid_search_cv,

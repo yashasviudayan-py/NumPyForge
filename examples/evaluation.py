@@ -16,10 +16,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-import src.metrics as metrics  # noqa: E402
-import src.model_selection as model_selection  # noqa: E402
-from src.baselines import MajorityClassClassifier, MeanRegressor  # noqa: E402
-from src.linear_model import LinearRegression, LogisticRegression  # noqa: E402
+import numpyforge.metrics as metrics  # noqa: E402
+import numpyforge.model_selection as model_selection  # noqa: E402
+from numpyforge.baselines import MajorityClassClassifier, MeanRegressor  # noqa: E402
+from numpyforge.linear_model import LinearRegression, LogisticRegression  # noqa: E402
 
 
 def classification_demo() -> None:

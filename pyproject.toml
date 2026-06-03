@@ -28,7 +28,10 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["api*", "pipeline*", "src*"]
+include = ["api*", "pipeline*", "numpyforge*"]
+
+[tool.setuptools.package-data]
+numpyforge = ["py.typed"]
 
 [tool.black]
 line-length = 100
@@ -41,7 +44,7 @@ testpaths = ["tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["api", "pipeline", "src"]
+source = ["api", "pipeline", "numpyforge"]
 
 [tool.coverage.report]
 show_missing = true
@@ -50,14 +53,14 @@ skip_covered = true
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["api", "examples", "pipeline", "src", "tests"]
+src = ["api", "examples", "numpyforge", "pipeline", "tests"]
 
 [tool.ruff.lint]
 select = ["B", "E", "F", "I", "UP"]
 ignore = []
 
 [tool.ruff.lint.isort]
-known-first-party = ["api", "pipeline", "src"]
+known-first-party = ["api", "pipeline", "numpyforge"]
 
 [tool.mypy]
 python_version = "3.11"

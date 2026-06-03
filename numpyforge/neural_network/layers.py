@@ -6,9 +6,9 @@ from typing import Protocol, cast
 
 import numpy as np
 
-from src.math import softmax, stable_sigmoid
-from src.neural_network.initializers import Initializer, initialize_parameters
-from src.types import FloatArray
+from numpyforge.math import softmax, stable_sigmoid
+from numpyforge.neural_network.initializers import Initializer, initialize_parameters
+from numpyforge.types import FloatArray
 
 
 class Layer(Protocol):

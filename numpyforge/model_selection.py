@@ -9,7 +9,7 @@ from typing import Protocol, cast
 
 import numpy as np
 
-from src.metrics import (
+from numpyforge.metrics import (
     accuracy_score,
     f1_score,
     mean_absolute_error,
@@ -17,9 +17,9 @@ from src.metrics import (
     r2_score,
     root_mean_squared_error,
 )
-from src.random import check_random_state
-from src.types import ArrayLike, FloatArray, IntArray, RandomState, RawArrayLike
-from src.validation import check_feature_matrix, check_target_vector
+from numpyforge.random import check_random_state
+from numpyforge.types import ArrayLike, FloatArray, IntArray, RandomState, RawArrayLike
+from numpyforge.validation import check_feature_matrix, check_target_vector
 
 
 class EstimatorProtocol(Protocol):

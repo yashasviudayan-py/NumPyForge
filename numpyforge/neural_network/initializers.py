@@ -6,7 +6,7 @@ from typing import Literal, cast
 
 import numpy as np
 
-from src.types import FloatArray
+from numpyforge.types import FloatArray
 
 Initializer = Literal["zeros", "normal", "xavier", "he"]
 

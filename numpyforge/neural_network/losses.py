@@ -6,8 +6,8 @@ from typing import Protocol, cast
 
 import numpy as np
 
-from src.math import clip_probabilities
-from src.types import FloatArray
+from numpyforge.math import clip_probabilities
+from numpyforge.types import FloatArray
 
 
 class NeuralLoss(Protocol):

@@ -8,8 +8,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from src.artifacts import artifact_status, load_logistic_artifact, save_logistic_artifact
-from src.linear_model import LogisticRegression
+from numpyforge.artifacts import artifact_status, load_logistic_artifact, save_logistic_artifact
+from numpyforge.linear_model import LogisticRegression
 
 
 def test_logistic_artifact_round_trips_predictions(tmp_path: Path) -> None:

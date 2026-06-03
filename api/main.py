@@ -14,11 +14,11 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel as PydanticBaseModel
 from pydantic import Field
 
-from src.artifacts import ModelArtifact, artifact_status, load_logistic_artifact
-from src.config import get_config_value, load_json_config
-from src.logging_utils import configure_json_logging, log_json
-from src.types import FloatArray
-from src.validation import check_feature_matrix
+from numpyforge.artifacts import ModelArtifact, artifact_status, load_logistic_artifact
+from numpyforge.config import get_config_value, load_json_config
+from numpyforge.logging_utils import configure_json_logging, log_json
+from numpyforge.types import FloatArray
+from numpyforge.validation import check_feature_matrix
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = PROJECT_ROOT / "configs" / "serving.json"

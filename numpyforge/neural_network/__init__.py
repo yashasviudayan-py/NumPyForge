@@ -1,8 +1,8 @@
 """Pure NumPy neural-network components."""
 
-from src.neural_network.estimators import MLPClassifier, MLPRegressor
-from src.neural_network.gradient_check import gradient_check
-from src.neural_network.layers import (
+from numpyforge.neural_network.estimators import MLPClassifier, MLPRegressor
+from numpyforge.neural_network.gradient_check import gradient_check
+from numpyforge.neural_network.layers import (
     Dense,
     Dropout,
     Layer,
@@ -12,7 +12,7 @@ from src.neural_network.layers import (
     SoftmaxActivation,
     TanhActivation,
 )
-from src.neural_network.losses import (
+from numpyforge.neural_network.losses import (
     BinaryCrossEntropyLoss,
     CategoricalCrossEntropyLoss,
     MeanSquaredErrorLoss,

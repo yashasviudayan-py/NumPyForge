@@ -8,9 +8,9 @@ from typing import Literal, Protocol, cast
 
 import numpy as np
 
-from src.random import check_random_state
-from src.types import ArrayLike, FloatArray, RandomState
-from src.validation import check_batch_size, check_validation_fraction
+from numpyforge.random import check_random_state
+from numpyforge.types import ArrayLike, FloatArray, RandomState
+from numpyforge.validation import check_batch_size, check_validation_fraction
 
 BatchStrategy = Literal["batch", "mini_batch", "stochastic"]
 ScheduleKind = Literal["constant", "step", "cosine"]

@@ -7,7 +7,7 @@ import json
 import numpy as np
 import pytest
 
-from src.metrics import (
+from numpyforge.metrics import (
     accuracy_score,
     adjusted_r2_score,
     classification_report_dict,

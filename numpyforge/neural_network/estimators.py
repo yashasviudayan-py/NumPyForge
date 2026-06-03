@@ -7,10 +7,10 @@ from typing import Literal, cast
 
 import numpy as np
 
-from src.base import BaseClassifier, BaseRegressor
-from src.math import one_hot
-from src.neural_network.initializers import Initializer
-from src.neural_network.layers import (
+from numpyforge.base import BaseClassifier, BaseRegressor
+from numpyforge.math import one_hot
+from numpyforge.neural_network.initializers import Initializer
+from numpyforge.neural_network.layers import (
     Dense,
     Dropout,
     Layer,
@@ -20,9 +20,13 @@ from src.neural_network.layers import (
     SoftmaxActivation,
     TanhActivation,
 )
-from src.neural_network.losses import CategoricalCrossEntropyLoss, MeanSquaredErrorLoss, NeuralLoss
-from src.neural_network.network import SequentialNetwork
-from src.optimizers import (
+from numpyforge.neural_network.losses import (
+    CategoricalCrossEntropyLoss,
+    MeanSquaredErrorLoss,
+    NeuralLoss,
+)
+from numpyforge.neural_network.network import SequentialNetwork
+from numpyforge.optimizers import (
     AdamOptimizer,
     LearningRateSchedule,
     MomentumOptimizer,
@@ -32,8 +36,8 @@ from src.optimizers import (
     ScheduleKind,
     SGDOptimizer,
 )
-from src.types import FloatArray, IntArray, RandomState, RawArrayLike
-from src.validation import check_multiclass_targets, check_validation_fraction
+from numpyforge.types import FloatArray, IntArray, RandomState, RawArrayLike
+from numpyforge.validation import check_multiclass_targets, check_validation_fraction
 
 ActivationName = Literal["relu", "leaky_relu", "sigmoid", "tanh"]
 OptimizerName = Literal["sgd", "momentum", "rmsprop", "adam"]

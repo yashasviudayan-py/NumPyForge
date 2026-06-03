@@ -15,8 +15,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.config import get_config_value, load_json_config  # noqa: E402
-from src.types import FloatArray, IntArray  # noqa: E402
+from numpyforge.config import get_config_value, load_json_config  # noqa: E402
+from numpyforge.types import FloatArray, IntArray  # noqa: E402
 
 DEFAULT_CONFIG = PROJECT_ROOT / "configs" / "training.json"
 

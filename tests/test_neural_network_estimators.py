@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from src.neural_network import MLPClassifier, MLPRegressor
+from numpyforge.neural_network import MLPClassifier, MLPRegressor
 
 
 def test_mlp_classifier_learns_xor() -> None:
