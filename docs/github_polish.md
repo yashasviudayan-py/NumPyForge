@@ -1,45 +1,59 @@
 # GitHub Presentation Checklist
 
-Use these settings on the GitHub repository page to make NumPyForge easier to discover and evaluate.
+These settings make NumPyForge easier to discover and evaluate. The repository
+metadata (description + topics) is applied live via the GitHub API; the social
+preview image must be uploaded once through the web UI.
 
 ## About Section
 
-Description:
+- [x] **Description** (applied):
 
-```text
-From-scratch NumPy ML framework with evaluation, FastAPI serving, MLflow artifacts, Docker, and CI.
-```
+  ```text
+  Built a pure-NumPy ML framework with classical models, MLPs, evaluation tools, FastAPI serving, Docker packaging, versioned artifacts, and CI-enforced tests/type checks.
+  ```
 
-Website:
+- [x] **Topics** (applied):
 
-```text
-https://github.com/yashasviudayan-py/NumPyForge/actions/workflows/ci.yml
-```
+  ```text
+  machine-learning
+  numpy
+  ml-from-scratch
+  mlops
+  fastapi
+  docker
+  github-actions
+  gradient-descent
+  neural-networks
+  model-serving
+  ```
 
-Topics:
+  Reapply with the GitHub CLI:
 
-```text
-machine-learning
-numpy
-ml-from-scratch
-mlops
-fastapi
-docker
-github-actions
-gradient-descent
-neural-networks
-model-serving
-```
+  ```bash
+  gh repo edit --add-topic machine-learning,numpy,ml-from-scratch,mlops,fastapi,docker,github-actions,gradient-descent,neural-networks,model-serving
+  ```
+
+- Website (optional): the CI workflow or a hosted demo, e.g.
+  `https://github.com/yashasviudayan-py/NumPyForge/actions/workflows/ci.yml`
 
 ## Social Preview
 
-Upload this repository asset as the GitHub social preview image:
+GitHub social previews must be a raster image (PNG/JPG, 1280x640). The card is
+authored as `assets/social-preview.svg` and rendered to
+`assets/social-preview.png` (the file to upload).
 
-```text
-assets/social-preview.svg
+- [ ] **Upload** (manual, web UI — GitHub has no API for this):
+  `Settings -> General -> Social preview -> Edit -> Upload an image`, then pick
+  `assets/social-preview.png`.
+
+Re-render the PNG from the SVG after any edit:
+
+```bash
+rsvg-convert -w 1280 -h 640 assets/social-preview.svg -o assets/social-preview.png
 ```
 
-If GitHub requires a raster image, export the SVG to PNG first.
+> `rsvg-convert` ships with `librsvg` (`brew install librsvg`). It preserves the
+> 1280x640 aspect ratio; macOS `qlmanage` does not and will clip the card.
 
 ## Pinned Repo Blurb
 
