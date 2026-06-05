@@ -32,9 +32,10 @@ Custom machine learning components implemented from scratch with NumPy, plus a p
 python -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-pip install -r requirements.txt
-pytest
-uvicorn api.main:app --reload
+python -m pip install -e ".[dev]"
+python -m pytest
+python -m pipeline.train
+python -m uvicorn api.main:app --reload
 ```
 
 ## What This Project Demonstrates
