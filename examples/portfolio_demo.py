@@ -11,6 +11,8 @@ import json
 import os
 import sys
 import tempfile
+from collections.abc import Iterator
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Any
 
@@ -39,9 +41,10 @@ def main() -> None:
         evaluation = evaluate(evaluation_config)
         artifact = load_logistic_artifact(Path(str(train_result["artifact_dir"])))
 
-        os.environ["NUMPYFORGE_SERVING_CONFIG"] = str(serving_config)
-        from api.main import app as demo_app  # noqa: PLC0415
+        with _demo_serving_environment(serving_config):
+            from api.main import create_app  # noqa: PLC0415
 
+            demo_app = create_app(serving_config)
         client = TestClient(demo_app)
         health = client.get("/health")
         ready = client.get("/ready")
@@ -132,6 +135,22 @@ def _write_serving_config(workspace: Path) -> Path:
 def _write_json(path: Path, value: dict[str, Any]) -> Path:
     path.write_text(json.dumps(value, indent=2, sort_keys=True), encoding="utf-8")
     return path
+
+
+@contextmanager
+def _demo_serving_environment(serving_config: Path) -> Iterator[None]:
+    env_vars = ("NUMPYFORGE_SERVING_CONFIG", "NUMPYFORGE_ARTIFACT_DIR")
+    previous = {name: os.environ.get(name) for name in env_vars}
+    os.environ["NUMPYFORGE_SERVING_CONFIG"] = str(serving_config)
+    os.environ.pop("NUMPYFORGE_ARTIFACT_DIR", None)
+    try:
+        yield
+    finally:
+        for name, value in previous.items():
+            if value is None:
+                os.environ.pop(name, None)
+            else:
+                os.environ[name] = value
 
 
 if __name__ == "__main__":
